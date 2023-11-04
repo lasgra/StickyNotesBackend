@@ -1,27 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\tomek\\source\\repos\\StickyNotesDatabase\\StickyNotesDatabase\\StickyNotesDatabase.csproj": {}
+    "C:\\Users\\Michal\\RiderProjects\\StickyNotesBackend\\StickyNotesDatabase\\StickyNotesDatabase.csproj": {}
   },
   "projects": {
-    "C:\\Users\\tomek\\source\\repos\\StickyNotesDatabase\\StickyNotesDatabase\\StickyNotesDatabase.csproj": {
+    "C:\\Users\\Michal\\RiderProjects\\StickyNotesBackend\\StickyNotesDatabase\\StickyNotesDatabase.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\tomek\\source\\repos\\StickyNotesDatabase\\StickyNotesDatabase\\StickyNotesDatabase.csproj",
+        "projectUniqueName": "C:\\Users\\Michal\\RiderProjects\\StickyNotesBackend\\StickyNotesDatabase\\StickyNotesDatabase.csproj",
         "projectName": "StickyNotesDatabase",
-        "projectPath": "C:\\Users\\tomek\\source\\repos\\StickyNotesDatabase\\StickyNotesDatabase\\StickyNotesDatabase.csproj",
-        "packagesPath": "C:\\Users\\tomek\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\tomek\\source\\repos\\StickyNotesDatabase\\StickyNotesDatabase\\obj\\",
+        "projectPath": "C:\\Users\\Michal\\RiderProjects\\StickyNotesBackend\\StickyNotesDatabase\\StickyNotesDatabase.csproj",
+        "packagesPath": "C:\\Users\\Michal\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Michal\\RiderProjects\\StickyNotesBackend\\StickyNotesDatabase\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\tomek\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\Michal\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -66,6 +64,10 @@
               "target": "Package",
               "version": "[7.0.13, )"
             },
+            "Pomelo.EntityFrameworkCore.MySql": {
+              "target": "Package",
+              "version": "[7.0.0, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.5.0, )"
@@ -90,7 +92,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100-rc.1.23463.5/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100-rc.2.23502.2/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

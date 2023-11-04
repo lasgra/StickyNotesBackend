@@ -1,21 +1,22 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
+using StickyNotesDatabase.Dtos;
 using StickyNotesDatabase.Models;
-using SticyNotesDatabase.Controllers;
+using StickyNotesDatabase.Services;
 
 var builder = WebApplication.CreateBuilder(args);
-var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
-var constr = builder.Configuration.GetConnectionString("conn");
-builder.Services.AddDbContext<StickyNotesContext>(opts => opts.UseSqlServer(constr));
+var connString = builder.Configuration.GetConnectionString("conn");
+builder.Services.AddDbContext<StickyNotesContext>(opts => 
+    opts.UseMySql(connString, ServerVersion.AutoDetect(connString))
+    );
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddCors();
 builder.Services.AddAntiforgery();
-builder.Services.AddTransient<UserController>();
-builder.Services.AddTransient<NoteController>();
+builder.Services.AddTransient<IUserService, UserService>();
+builder.Services.AddTransient<INotesService, NotesService>();
 
 var app = builder.Build();
 
@@ -27,7 +28,6 @@ app.UseCors(
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 if (app.Environment.IsDevelopment())
@@ -36,49 +36,40 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.MapGet("/RandomNote", (NoteController service, string? Username) => {
-    return Results.Ok(service.GetRandomNote(Username));
+app.MapGet("/RandomNote", (INotesService service, string? username) => {
+    return Results.Ok(service.GetRandomNote(username));
 });
-app.MapPost("/GetNote", (NoteController service, string Author) => {
-    return Results.Ok(service.GetNote(Author));
+app.MapPost("/GetNote", (INotesService service, string author) => {
+    return Results.Ok(service.GetNote(author));
 });
-app.MapGet("/FrontRandomNote", (NoteController service) => {
-    return Results.Ok(service.GetFrontRandomNotes());
+app.MapGet("/FrontRandomNote", (INotesService service) => {
+    return Results.Ok(service.GetFrontRandomNotes(null));
 });
-app.MapGet("/GetBestNotes", (NoteController service, string? Username) => {
-    return Results.Ok(service.GetBestNotes(Username));
+app.MapGet("/GetBestNotes", (INotesService service, string? username) => {
+    return Results.Ok(service.GetBestNotes(username));
 });
-app.MapGet("/GetRecentNotes", (NoteController service, string? Username) => {
-    return Results.Ok(service.GetRecentNotes(Username));
+app.MapGet("/GetRecentNotes", (INotesService service, string? username) => {
+    return Results.Ok(service.GetRecentNotes(username));
 });
-app.MapPost("/Vote", (NoteController services, string Author, string Username) =>
+app.MapPost("/Vote", (INotesService services, string author, string username) =>
 {
-    return Results.Ok(services.AddVote(Author, Username));
+    return Results.Ok(services.AddVote(author, username));
 });
-app.MapPost("/AddNote", (NoteController service, StickyNoteDTO note) =>
+app.MapPost("/AddNote", (INotesService service, StickyNoteDto note) =>
 {
-    var Result = service.PostNote(note);
-    if (Result == null)
-    {
-        return Results.Conflict();
-    }
-    return Results.Ok(Result);
+    var result = service.PostNote(note);
+    return Results.Ok(result);
 });
 
-app.MapPost("/FindUser", (UserController service, UserDTO dto) =>
+app.MapPost("/FindUser", (IUserService service, User dto) =>
 {
     var answer = service.CheckForUser(dto);
-    if (answer == "Nima")
-    {
-        return Results.Ok("NotExists");
-    }
-    return Results.Ok("Exists");
+    return Results.Ok(answer == "Nima" ? "NotExists" : "Exists");
 });
-app.MapPost("/AddUser", (UserController service, UserDTO dto) =>
+app.MapPost("/AddUser", (IUserService service, User dto) =>
 {
     var answer = service.CreateUser(dto);
-    if (answer == "Added") { return Results.Ok("Added"); };
-    return Results.Ok("Exists");
+    return answer == "Added" ? Results.Ok("Added") : Results.Ok("Exists");
 });
 
 app.UseHttpsRedirection();
@@ -87,9 +78,5 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
-
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Category}/{action=Add}/{id?}");
 
 app.Run();
