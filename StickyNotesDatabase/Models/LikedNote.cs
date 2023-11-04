@@ -1,14 +1,17 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace StickyNotesDatabase.Models
+namespace StickyNotesDatabase.Models;
+
+public class LikedNote
 {
-    public class LikedNote
-    {
-        [Key]
-        public string Author { get; set; }
-        public string Users { get; set; }
-    }
+    [Key] 
+    public int Id { get; set; }
+    
+    [Required]
+    public int UserId { get; set; }
+    public virtual User User { get; set; } = null!;
+    
+    [Required]
+    public int StickyNoteId { get; set; }
+    public virtual StickyNote StickyNote { get; set; } = null!;
 }

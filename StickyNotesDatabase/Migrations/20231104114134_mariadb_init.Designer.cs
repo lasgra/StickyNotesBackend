@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StickyNotesDatabase.Models;
 
@@ -10,9 +11,11 @@ using StickyNotesDatabase.Models;
 namespace StickyNotesDatabase.Migrations
 {
     [DbContext(typeof(StickyNotesContext))]
-    partial class StickyNotesContextModelSnapshot : ModelSnapshot
+    [Migration("20231104114134_mariadb_init")]
+    partial class mariadb_init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
