@@ -87,7 +87,7 @@ public class NotesService(StickyNotesContext ctx) : INotesService
         
         if (userWhoAlreadyLiked == null)
         {
-            noteToVote.LikedNotes.Add(new LikedNote()
+            ctx.LikedNotes.Add(new LikedNote()
             {
                 StickyNoteId = noteToVote.Id,
                 UserId = ctx.Users.FirstOrDefault(u => u.Username == likingUser)?.Id ?? throw new Exception("User not found")

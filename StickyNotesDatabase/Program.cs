@@ -6,9 +6,7 @@ using StickyNotesDatabase.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 var connString = builder.Configuration.GetConnectionString("conn");
-builder.Services.AddDbContext<StickyNotesContext>(opts => 
-    opts.UseMySql(connString, ServerVersion.AutoDetect(connString))
-    );
+builder.Services.AddDbContext<StickyNotesContext>(opts => opts.UseMySql(connString, ServerVersion.AutoDetect(connString)));
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddEndpointsApiExplorer();

@@ -11,8 +11,8 @@ using StickyNotesDatabase.Models;
 namespace StickyNotesDatabase.Migrations
 {
     [DbContext(typeof(StickyNotesContext))]
-    [Migration("20231104114134_mariadb_init")]
-    partial class mariadb_init
+    [Migration("20231104122645_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
